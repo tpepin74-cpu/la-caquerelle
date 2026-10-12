@@ -395,8 +395,9 @@
   }
   var MONO = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5c-1 2 0 4 2 5M9 6c-2 1-3 3-2 5M21 5c1 2 0 4-2 5M23 6c2 1 3 3 2 5"/><path d="M13 10c-2 0-3 2-3 4 0 3 3 6 6 9 3-3 6-6 6-9 0-2-1-4-3-4-1 0-2 .5-3 1.5C15 10.5 14 10 13 10z"/><circle cx="13.5" cy="15" r=".6" fill="currentColor"/><circle cx="18.5" cy="15" r=".6" fill="currentColor"/></svg>';
   function buildConcierge(host, opts) {
-    host.innerHTML = '<div class="concierge" role="region" aria-label="Concierge de La Caquerelle"><div class="cg-head"><span class="cg-mono">' + MONO + '</span><span class="cg-title"><b>Le Concierge</b><span>La Caquerelle · répond tout de suite</span></span>' + (opts.closable ? '<button class="cg-close" type="button" aria-label="Fermer le concierge">×</button>' : '') + '</div><div class="cg-log" role="log" aria-live="polite"></div><form class="cg-form"><label class="sr-only" for="cg-in-' + opts.id + '">Votre question</label><input id="cg-in-' + opts.id + '" type="text" autocomplete="off" placeholder="Posez votre question…" maxlength="200"><button type="submit">Envoyer</button></form></div>';
+    host.innerHTML = '<div class="concierge" role="region" aria-label="Votre concierge en ligne"><div class="cg-head"><span class="cg-mono">' + MONO + '</span><span class="cg-title"><b>Votre concierge en ligne</b><span>La Caquerelle · répond tout de suite</span></span>' + (opts.onClose ? '<button class="cg-close" type="button" aria-label="Fermer votre concierge en ligne">×</button>' : '') + '</div><div class="cg-log" role="log" aria-live="polite"></div><form class="cg-form"><label class="sr-only" for="cg-in-' + opts.id + '">Votre question</label><input id="cg-in-' + opts.id + '" type="text" autocomplete="off" placeholder="Posez votre question…" maxlength="200"><button type="submit">Envoyer</button></form></div>';
     var log = host.querySelector('.cg-log'), form = host.querySelector('.cg-form'), input = form.querySelector('input');
+    if (opts.onClose) host.querySelector('.cg-close').addEventListener('click', opts.onClose);
     function scroll() { log.scrollTop = log.scrollHeight; }
     function clearChips() { log.querySelectorAll('.cg-chips').forEach(function (c) { c.remove(); }); }
     function bot(r) {
@@ -426,16 +427,132 @@
     var pop = null;
     fab.addEventListener('click', function () {
       if (!pop) {
-        pop = document.createElement('div'); pop.className = 'cg-pop'; pop.id = 'cg-pop'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Concierge de La Caquerelle'); document.body.appendChild(pop);
+        pop = document.createElement('div'); pop.className = 'cg-pop'; pop.id = 'cg-pop'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Votre concierge en ligne'); document.body.appendChild(pop);
         fab.setAttribute('aria-controls', 'cg-pop');
-        buildConcierge(pop, { id: 'pop', closable: true });
-        pop.querySelector('.cg-close').addEventListener('click', function () { pop.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.focus(); });
+        buildConcierge(pop, { id: 'pop', onClose: function () { pop.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.focus(); } });
       } else { pop.hidden = false; }
       fab.setAttribute('aria-expanded', 'true');
       var inp = pop.querySelector('input'); inp && setTimeout(function () { inp.focus(); }, 50);
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pop && !pop.hidden) { pop.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.focus(); } });
   }
+
+  /* ================== Application mobile : feuilles modales ================== */
+  var appMq = window.matchMedia('(max-width: 760px)');
+  var openSheetEl = null;
+  function setExpanded(id, v) {
+    document.querySelectorAll('[data-sheet-open="' + id + '"][aria-expanded]').forEach(function (b) { b.setAttribute('aria-expanded', v ? 'true' : 'false'); });
+  }
+  function ensureSheetConcierge(d) {
+    var host = d.querySelector('[data-cg-sheet]');
+    if (!host || host.firstChild) return;
+    buildConcierge(host, { id: 'sh', onClose: function () { closeSheet(d); } });
+    var head = host.querySelector('.cg-head');
+    if (head) attachDrag(d, head);
+  }
+  function openSheet(d, trigger) {
+    if (!d || typeof d.showModal !== 'function') return false;
+    if (openSheetEl && openSheetEl !== d) { var prev = openSheetEl; trigger = prev._trigger || trigger; openSheetEl = null; prev.close(); }
+    if (d.open) return true;
+    d._trigger = trigger || null;
+    d.classList.remove('is-closing'); d.style.transform = ''; d.style.transition = '';
+    if (d.id === 'sheet-cg') ensureSheetConcierge(d);
+    d.showModal();
+    openSheetEl = d;
+    document.documentElement.classList.add('sheet-open');
+    setExpanded(d.id, true);
+    var first = d.querySelector('[data-sheet-close], .cg-close');
+    if (first) first.focus({ preventScroll: true });
+    return true;
+  }
+  function closeSheet(d, instant) {
+    if (!d || !d.open || d.classList.contains('is-closing')) return;
+    if (instant || reduce) { d.close(); return; }
+    d.style.transform = ''; d.style.transition = '';
+    d.classList.add('is-closing');
+    var done = false;
+    function fin() { if (done) return; done = true; d.removeEventListener('transitionend', onEnd); d.close(); }
+    function onEnd(e) { if (e.target === d && e.propertyName === 'transform') fin(); }
+    d.addEventListener('transitionend', onEnd);
+    setTimeout(fin, 380);
+  }
+  /* Glisser vers le bas pour fermer, depuis la poignée et l'en-tête */
+  function attachDrag(d, zone) {
+    var startY = 0, lastY = 0, lastT = 0, vel = 0, dy = 0, pid = null;
+    zone.addEventListener('pointerdown', function (e) {
+      if ((e.button !== undefined && e.button !== 0) || e.target.closest('button, a, input, select, textarea')) return;
+      pid = e.pointerId; startY = lastY = e.clientY; lastT = performance.now(); vel = 0; dy = 0;
+      d.style.transition = 'none';
+      try { zone.setPointerCapture(pid); } catch (err) { }
+    });
+    zone.addEventListener('pointermove', function (e) {
+      if (pid === null || e.pointerId !== pid) return;
+      var now = performance.now(), y = e.clientY - startY;
+      dy = y > 0 ? y : y * 0.12; /* légère résistance vers le haut */
+      vel = (e.clientY - lastY) / Math.max(1, now - lastT); lastY = e.clientY; lastT = now;
+      d.style.transform = 'translateY(' + dy + 'px)';
+    });
+    function end() {
+      if (pid === null) return;
+      pid = null; d.style.transition = '';
+      if (dy > d.offsetHeight * 0.28 || (dy > 24 && vel > 0.45)) closeSheet(d);
+      else d.style.transform = '';
+    }
+    zone.addEventListener('pointerup', end);
+    zone.addEventListener('pointercancel', end);
+  }
+  document.querySelectorAll('dialog.sheet').forEach(function (d) {
+    d.querySelectorAll('[data-sheet-drag]').forEach(function (z) { attachDrag(d, z); });
+    d.addEventListener('close', function () {
+      d.classList.remove('is-closing'); d.style.transform = ''; d.style.transition = '';
+      setExpanded(d.id, false);
+      if (openSheetEl === d) openSheetEl = null;
+      if (!openSheetEl) {
+        document.documentElement.classList.remove('sheet-open');
+        var t = d._trigger;
+        if (t && document.contains(t) && t.getClientRects().length) t.focus({ preventScroll: true });
+      }
+    });
+    d.addEventListener('cancel', function (e) { e.preventDefault(); closeSheet(d); });
+    d.addEventListener('click', function (e) {
+      if (e.target === d) {
+        var r = d.getBoundingClientRect();
+        if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) closeSheet(d);
+        return;
+      }
+      if (e.target.closest('[data-sheet-close]')) { closeSheet(d); return; }
+      var a = e.target.closest('a[href]');
+      if (a && !a.target && !/^(tel|mailto):/.test(a.getAttribute('href'))) closeSheet(d, true);
+    });
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sheet-open]');
+    if (!b) return;
+    var d = document.getElementById(b.getAttribute('data-sheet-open'));
+    if (d && openSheet(d, b)) e.preventDefault();
+  });
+  /* Carrousels sans lien : focalisables au clavier sur mobile uniquement */
+  function scrollerA11y() {
+    document.querySelectorAll('.cards, .gallery').forEach(function (el) {
+      var needs = appMq.matches && !el.querySelector('a[href], button, input, select, textarea');
+      if (needs && !el.hasAttribute('data-a11y')) {
+        var sec = el.closest('section'), h = sec && sec.querySelector('h2');
+        el.setAttribute('tabindex', '0'); el.setAttribute('role', 'region'); el.setAttribute('data-a11y', '');
+        el.setAttribute('aria-label', (h ? h.textContent.replace(/\s+/g, ' ').trim() : 'Galerie') + ', faites défiler');
+      } else if (!needs && el.hasAttribute('data-a11y')) {
+        ['tabindex', 'role', 'aria-label', 'data-a11y'].forEach(function (k) { el.removeAttribute(k); });
+      }
+    });
+  }
+  scrollerA11y();
+  /* Le clavier virtuel masque la barre d'onglets pendant la saisie */
+  document.addEventListener('focusin', function (e) {
+    var el = e.target;
+    document.documentElement.classList.toggle('kb-open', appMq.matches && !el.closest('dialog') && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !/^(button|submit|checkbox|radio)$/.test(el.type || ''));
+  });
+  document.addEventListener('focusout', function () { setTimeout(function () { var a = document.activeElement; if (!a || !/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) document.documentElement.classList.remove('kb-open'); }, 60); });
+  var onAppMq = function () { scrollerA11y(); if (!appMq.matches && openSheetEl) openSheetEl.close(); };
+  appMq.addEventListener ? appMq.addEventListener('change', onAppMq) : appMq.addListener(onAppMq);
 
   paintStatus(); setInterval(paintStatus, 60000);
 })();

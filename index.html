@@ -27,6 +27,7 @@
     <div class="header-actions">
       <span class="open-pill" data-open-status>Horaires</span>
       <a class="btn btn--brass btn--sm" href="reserver.html">Réserver</a>
+      <button class="appbar-cg" type="button" data-sheet-open="sheet-cg" aria-haspopup="dialog" aria-controls="sheet-cg" aria-expanded="false" aria-label="Ouvrir votre concierge en ligne"><span class="appbar-cg__l"><span>Concierge</span> <span>en ligne</span></span><span class="cg-mono"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5c-1 2 0 4 2 5M9 6c-2 1-3 3-2 5M21 5c1 2 0 4-2 5M23 6c2 1 3 3 2 5"/><path d="M13 10c-2 0-3 2-3 4 0 3 3 6 6 9 3-3 6-6 6-9 0-2-1-4-3-4-1 0-2 .5-3 1.5C15 10.5 14 10 13 10z"/></svg></span></button>
       <button class="burger" type="button" data-burger aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu"><span></span></button>
     </div>
   </div>
@@ -142,7 +143,7 @@
   <div class="chapter__media"><img src="chevreuil-1024.webp" srcset="chevreuil-640.webp 640w, chevreuil-1024.webp 1024w, chevreuil-1600.webp 1600w, chevreuil.webp 2400w" sizes="(max-width: 900px) 100vw, 58vw" alt="Chevreuil à l’aube dans une clairière moussue du Jura, feuilles d’automne et brume dorée" width="2400" height="1350" loading="lazy" decoding="async"></div>
   <div class="chapter__content"><div class="concierge-stage">
     <div class="stack">
-      <span class="eyebrow">Votre concierge</span>
+      <span class="eyebrow">Votre concierge en ligne</span>
       <h2 class="h2" id="cg-t">Dites-nous ce qui vous ferait plaisir</h2>
       <p class="lead">Une chambre, une table, une idée de séjour ou une fête à organiser : le concierge de la maison vous oriente en quelques questions, à toute heure.</p>
       <p class="small" style="color:rgba(242,240,234,.75)">Pour une demande particulière, la famille Petignat vous répond au <span class="num">032 426 66 56</span>.</p>
@@ -232,6 +233,61 @@
     <p>Photographies : La Caquerelle et Jura Tourisme. Certains visuels sont des illustrations d’ambiance.</p>
   </div>
 </footer>
-<button class="cg-fab" type="button" data-cg-fab aria-expanded="false" aria-label="Ouvrir le concierge"><span class="cg-mono"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5c-1 2 0 4 2 5M9 6c-2 1-3 3-2 5M21 5c1 2 0 4-2 5M23 6c2 1 3 3 2 5"/><path d="M13 10c-2 0-3 2-3 4 0 3 3 6 6 9 3-3 6-6 6-9 0-2-1-4-3-4-1 0-2 .5-3 1.5C15 10.5 14 10 13 10z"/></svg></span><span class="lbl">Concierge</span></button>
+<button class="cg-fab" type="button" data-cg-fab aria-expanded="false" aria-label="Ouvrir votre concierge en ligne"><span class="cg-mono"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5c-1 2 0 4 2 5M9 6c-2 1-3 3-2 5M21 5c1 2 0 4-2 5M23 6c2 1 3 3 2 5"/><path d="M13 10c-2 0-3 2-3 4 0 3 3 6 6 9 3-3 6-6 6-9 0-2-1-4-3-4-1 0-2 .5-3 1.5C15 10.5 14 10 13 10z"/></svg></span><span class="lbl">Votre concierge en ligne</span></button>
+<nav class="tabbar" aria-label="Navigation rapide">
+  <a class="tabbar__i" href="./" aria-current="page"><span class="tabbar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M5.5 9.6V20h13V9.6"/><path d="M10 20v-5.2h4V20"/></svg></span><span class="tabbar__l">Accueil</span></a><a class="tabbar__i" href="restaurant.html"><span class="tabbar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17.5h18"/><path d="M5 17.5a7 7 0 0 1 14 0"/><path d="M12 10.5V8.6"/><circle cx="12" cy="7.4" r="1.1"/><path d="M6.5 20.5h11"/></svg></span><span class="tabbar__l">Restaurant</span></a><button class="tabbar__i tabbar__i--cta" type="button" data-sheet-open="sheet-book" aria-haspopup="dialog" aria-controls="sheet-book" aria-expanded="false"><span class="tabbar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 9.8h17M8 3v3.6M16 3v3.6"/><path d="m9.2 15 2 2 3.8-3.9"/></svg></span><span class="tabbar__l">Réserver</span></button><a class="tabbar__i" href="sejours.html"><span class="tabbar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 19.5 6.2-9.8 3.9 5.9 2.4-3.4 6.5 7.3z"/><circle cx="16.8" cy="6.2" r="2.1"/></svg></span><span class="tabbar__l">Séjours</span></a><button class="tabbar__i" type="button" data-sheet-open="sheet-plus" aria-haspopup="dialog" aria-controls="sheet-plus" aria-expanded="false"><span class="tabbar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.6" height="6.6" rx="1.8"/><rect x="13.4" y="4" width="6.6" height="6.6" rx="1.8"/><rect x="4" y="13.4" width="6.6" height="6.6" rx="1.8"/><rect x="13.4" y="13.4" width="6.6" height="6.6" rx="1.8"/></svg></span><span class="tabbar__l">Plus</span></button>
+</nav>
+<dialog class="sheet" id="sheet-book" aria-labelledby="sb-title">
+  <div class="sheet__head" data-sheet-drag><span class="sheet__grab" aria-hidden="true"></span><h2 class="sheet__t" id="sb-title">Réserver</h2><button class="sheet__x" type="button" data-sheet-close aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="sheet__body">
+    <div data-tabs>
+      <div class="tabs" role="tablist" aria-label="Type de réservation">
+        <button class="tab" role="tab" id="sb-t-ch" aria-selected="true" aria-controls="sb-p-ch" type="button">Chambre</button>
+        <button class="tab" role="tab" id="sb-t-ta" aria-selected="false" aria-controls="sb-p-ta" tabindex="-1" type="button">Table</button>
+        <button class="tab" role="tab" id="sb-t-ev" aria-selected="false" aria-controls="sb-p-ev" tabindex="-1" type="button">Événement</button>
+      </div>
+      <div class="tabpanel" role="tabpanel" id="sb-p-ch" aria-labelledby="sb-t-ch"><form class="bk" data-room onsubmit="return false">
+  <div class="bk-grid bk-grid--3">
+    <div class="field"><label for="ar-sb">Arrivée</label><input id="ar-sb" type="date" name="arrivee" required></div>
+    <div class="field"><label for="de-sb">Départ</label><input id="de-sb" type="date" name="depart" required></div>
+    <div class="field"><label for="pe-sb">Voyageurs</label><select id="pe-sb" name="personnes"><option value="1">1 personne</option><option value="2" selected>2 personnes</option><option value="3">3 personnes</option><option value="4">4 personnes</option><option value="5">5 personnes</option><option value="6">6 personnes</option></select></div>
+    
+    <a class="btn btn--brass ext" href="https://booking.juratroislacs.ch/TDS00020010000457519/tbooking/?lang=fr" target="_blank" rel="noopener">Voir les disponibilités</a>
+  </div>
+  <p class="bk-recap" data-recap aria-live="polite"></p>
+  <p class="small muted" style="margin:0">Prix et disponibilités en temps réel sur le moteur officiel Jura &amp; Trois-Lacs, où vous confirmerez vos dates en toute sécurité.</p>
+</form></div>
+      <div class="tabpanel" role="tabpanel" id="sb-p-ta" aria-labelledby="sb-t-ta" hidden><form class="bk" data-table onsubmit="return false">
+  <div class="bk-grid bk-grid--3">
+    <div class="field"><label for="td-sb">Date</label><input id="td-sb" type="date" name="date" required></div>
+    <div class="field"><label for="th-sb">Heure</label><select id="th-sb" name="heure"></select></div>
+    <div class="field"><label for="tc-sb">Couverts</label><select id="tc-sb" name="couverts"><option value="1">1 couvert</option><option value="2" selected>2 couverts</option><option value="3">3 couverts</option><option value="4">4 couverts</option><option value="5">5 couverts</option><option value="6">6 couverts</option><option value="7">7 couverts</option><option value="8">8 couverts</option><option value="9">9 couverts</option><option value="10">10 couverts</option><option value="11">11 couverts</option><option value="12">12 couverts</option><option value="15">15 couverts</option><option value="20">20 couverts</option><option value="25">25 couverts</option><option value="30">30 couverts</option></select></div>
+    <a class="btn btn--brass ext" href="https://www.mylocalina.ch/widget/?id=2bb7ca5d-07d8-4615-83be-13c94adc9818" target="_blank" rel="noopener">Réserver la table</a>
+  </div>
+  <p class="bk-recap" data-recap aria-live="polite"></p>
+  <p class="small muted" style="margin:0">Confirmation immédiate sur notre système de réservation en ligne, ou par téléphone au <span class="num">032 426 66 56</span>.</p>
+</form></div>
+      <div class="tabpanel" role="tabpanel" id="sb-p-ev" aria-labelledby="sb-t-ev" hidden><div class="stack-sm"><p style="margin:0">Mariage, anniversaire, séminaire ou sortie de groupe : 80 couverts, une salle de 25 places et deux salles de conférence équipées.</p><a class="btn btn--brass" href="evenements.html#demande">Préparer ma demande</a><a class="btn" href="restaurant.html#groupes">Menus de groupe</a></div></div>
+    </div>
+    <a class="sheet__call" href="tel:+41324266656"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.7l1.4 4-2.1 1.3a11 11 0 0 0 6.6 6.6l1.3-2.1 4 1.4v2.7a1.9 1.9 0 0 1-2 1.9A16.3 16.3 0 0 1 4.6 5.5a1.9 1.9 0 0 1 2-2z"/></svg><span>Une question ? <b class="num">032 426 66 56</b></span></a>
+  </div>
+</dialog>
+<dialog class="sheet" id="sheet-plus" aria-labelledby="sp-title">
+  <div class="sheet__head" data-sheet-drag><span class="sheet__grab" aria-hidden="true"></span><h2 class="sheet__t" id="sp-title">La maison</h2><button class="sheet__x" type="button" data-sheet-close aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="sheet__body">
+    <p class="sheet__status"><span class="open-pill" data-open-status>Horaires</span></p>
+    <ul class="app-grid"><li><a class="app-tile" href="hotel.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18.5V6.5M3 14h18v4.5M21 14v-2.2a3 3 0 0 0-3-3h-7.2V14"/><circle cx="7" cy="11" r="1.9"/></svg><span>Hôtel</span></a></li><li><a class="app-tile" href="activites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.3"/><circle cx="12" cy="12" r=".9" fill="currentColor"/></svg><span>Activités</span></a></li><li><a class="app-tile" href="evenements.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.5h8l-.6 5.4a3.4 3.4 0 0 1-6.8 0z"/><path d="M12 12.3v7.7M8.6 20.5h6.8"/></svg><span>Événements</span></a></li><li><a class="app-tile" href="historique.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.6C10 5.1 7 4.6 4 5.1v13.2c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5.1c-3-.5-6 0-8 1.5z"/><path d="M12 6.6v13.2"/></svg><span>Histoire</span></a></li><li><a class="app-tile" href="contact.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.6-5.7-6.6-11.1a6.6 6.6 0 0 1 13.2 0C18.6 15.3 12 21 12 21z"/><circle cx="12" cy="9.9" r="2.3"/></svg><span>Contact</span></a></li><li><button class="app-tile" type="button" data-sheet-open="sheet-cg" aria-haspopup="dialog" aria-controls="sheet-cg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.5h15v10.2h-8.2L6.8 19.3v-3.6H4.5z"/><path d="M8.5 10.6h7"/></svg><span>Votre concierge en ligne</span></button></li></ul>
+    <div class="quick">
+      <a class="quick__i" href="tel:+41324266656"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.7l1.4 4-2.1 1.3a11 11 0 0 0 6.6 6.6l1.3-2.1 4 1.4v2.7a1.9 1.9 0 0 1-2 1.9A16.3 16.3 0 0 1 4.6 5.5a1.9 1.9 0 0 1 2-2z"/></svg><span>Appeler</span></a>
+      <a class="quick__i" href="https://www.google.com/maps/search/?api=1&query=47.379887%2C7.2109573" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 11 16-7-7 16-2.1-6.9z"/></svg><span>Itinéraire</span></a>
+      <a class="quick__i" href="mailto:lacaquerelle@bluewin.ch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.4"/><path d="m4.2 7.2 7.8 5.9 7.8-5.9"/></svg><span>E-mail</span></a>
+    </div>
+    <p class="sheet__foot">La Caquerelle 8 · 2954 Asuel · Jura suisse<br>Fermé le mercredi et le jeudi</p>
+  </div>
+</dialog>
+<dialog class="sheet sheet--dark sheet--tall" id="sheet-cg" aria-label="Votre concierge en ligne">
+  <div class="sheet__head sheet__head--bare" data-sheet-drag><span class="sheet__grab" aria-hidden="true"></span></div>
+  <div class="sheet__cg" data-cg-sheet></div>
+</dialog>
 <script src="site.js" defer></script>
 </body></html>
