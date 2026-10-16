@@ -124,19 +124,39 @@
     });
   });
 
-  /* ---------------- Réservation chambre ---------------- */
+  /* ---------------- Réservation chambre ----------------
+     Le moteur officiel (TBooking, Jura & Trois-Lacs) accepte une recherche pré-remplie :
+     date_from / date_to au format jj.mm.aaaa, number_adult[i] par chambre (3 chambres max.)
+     et doSearch=1 pour afficher directement les chambres libres et le prix du séjour. */
   function roomType(p) { return p <= 2 ? 'Chambre double' : p === 3 ? 'Chambre à trois lits' : p === 4 ? 'Chambre familiale (4 lits)' : 'Plusieurs chambres'; }
+  function splitRooms(p) { /* 4 personnes au plus par chambre, réparties équitablement */
+    var r = Math.min(3, Math.ceil(p / 4)), out = [];
+    for (var i = 0; i < r; i++) out.push(Math.floor(p / r) + (i < p % r ? 1 : 0));
+    return out;
+  }
+  function dmy(iso) { var x = iso.split('-'); return x[2] + '.' + x[1] + '.' + x[0]; }
+  function roomUrl(base, from, to, pers) {
+    var q = ['globalReset=1', 'lang=fr', 'date_from=' + dmy(from), 'date_to=' + dmy(to)];
+    splitRooms(pers).forEach(function (n, i) { q.push('number_adult%5B' + i + '%5D=' + n); });
+    q.push('doSearch=1');
+    return base + '?' + q.join('&');
+  }
   document.querySelectorAll('[data-room]').forEach(function (f) {
     var a = f.querySelector('[name=arrivee]'), d = f.querySelector('[name=depart]'), p = f.querySelector('[name=personnes]'), out = f.querySelector('[data-recap]');
+    var go = f.querySelector('a.btn[href*="tbooking"]'), base = go ? go.href.split('?')[0] : '';
     var n = zNow(); a.min = n.date; if (!a.value) a.value = addDays(n.date, 1);
     function sync() {
-      if (!a.value) a.value = n.date;
+      if (!a.value || a.value < n.date) a.value = n.date;
       var minDep = addDays(a.value, 1); d.min = minDep; if (!d.value || d.value < minDep) d.value = addDays(a.value, 2);
       var nights = Math.round((new Date(d.value + 'T12:00:00Z') - new Date(a.value + 'T12:00:00Z')) / 864e5);
-      var pers = +p.value;
-      var html = '<span><strong>' + nights + ' nuit' + (nights > 1 ? 's' : '') + '</strong> · du ' + longDate(a.value) + ' au ' + longDate(d.value) + '</span><span><strong>' + roomType(pers) + '</strong></span>';
-      if (pers > 4) html += '<span class="warn">Au-delà de 4 personnes, nous vous conseillons de nous appeler au ' + PHONE + '.</span>';
+      var pers = +p.value, rooms = splitRooms(pers);
+      var html = '<span><strong>' + nights + ' nuit' + (nights > 1 ? 's' : '') + '</strong> · du ' + longDate(a.value) + ' au ' + longDate(d.value) + '</span><span><strong>' + (rooms.length > 1 ? rooms.length + ' chambres (' + rooms.join(' + ') + ' personnes)' : roomType(pers)) + '</strong></span>';
+      if (pers > 4) html += '<span>Pour un groupe, nous vous conseillons aussi de nous appeler au ' + PHONE + '.</span>';
       out.innerHTML = html;
+      if (go) {
+        go.href = roomUrl(base, a.value, d.value, pers);
+        go.setAttribute('aria-label', 'Voir les disponibilités du ' + longDate(a.value) + ' au ' + longDate(d.value) + ' (nouvel onglet)');
+      }
     }
     [a, d, p].forEach(function (el) { el.addEventListener('change', sync); });
     sync();
