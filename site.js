@@ -203,18 +203,6 @@
     });
   });
 
-  /* ---------------- Filtres séjours ---------------- */
-  document.querySelectorAll('[data-filters]').forEach(function (bar) {
-    var chips = bar.querySelectorAll('.chip');
-    chips.forEach(function (c) {
-      c.addEventListener('click', function () {
-        var f = c.getAttribute('data-f');
-        chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); });
-        document.querySelectorAll('[data-tags]').forEach(function (s) { s.hidden = f !== 'tout' && s.getAttribute('data-tags').split(' ').indexOf(f) === -1; });
-      });
-    });
-  });
-
   /* ================== Application mobile : feuilles modales ================== */
   var appMq = window.matchMedia('(max-width: 760px)');
   var openSheetEl = null;
